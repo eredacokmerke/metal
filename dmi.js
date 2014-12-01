@@ -13,7 +13,8 @@ input.id = "dmi-input2";
 
 //liste haricine tıklanırsa liste kapanacak
 window.onclick = function (e) {
-    var target = event.target || event.srcElement;
+    e = e || window.event;
+    var target = e.target || e.srcElement;
     var id = target.parentNode.id;
     if (target.parentNode.id !== "dmi-input-div" && target.parentNode.id !== "dmi-items") {
         listeyiKapat();
