@@ -16,7 +16,7 @@ add html :
 <div id="dmi-input-div"></div>
 <div id="dmi-items-div">
     <ul id="dmi-items">
-        <li>first item</li><br>
+        <li>first item</li>
         <li>second item</li>
         ....
     </ul>
