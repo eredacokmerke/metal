@@ -3,18 +3,33 @@ var dmi_items_div = document.getElementById("dmi-items-div");
 var dmi_items = document.getElementById("dmi-items");
 var listeElemani = dmi_items.getElementsByTagName("li");
 var output = document.createElement("output");
-output.style.cursor = "pointer";
+var input = document.createElement("input");
 
+output.style.cursor = "pointer";
 dmi_items_div.style.display = "none";
 dmi_items.style.listStyle = "none";
 dmi_items.style.padding = "0";
-
-var input = document.createElement("input");
 input.id = "dmi-input2";
+
+//liste haricine tıklanırsa liste kapanacak
+window.onclick = function (e) {
+    var target = event.target || event.srcElement;
+    var id = target.parentNode.id;
+    if (target.parentNode.id !== "dmi-input-div" && target.parentNode.id !== "dmi-items") {
+        listeyiKapat();
+    }
+}
+
+//listeden seçim yapıldı
+dmi_items.addEventListener("click", function (e) {
+    input.value = e.target.innerHTML;
+    listeyiKapat();
+});
+
 //input a yazı yazıldı
 input.addEventListener("input", function () {
     var i;
-    var sonucVar=0;
+    var sonucVar = 0;
 
     for (i = 0; i < listeElemani.length; i++) {
         if (listeElemani[i].innerHTML.indexOf(input.value) === -1) {
@@ -23,18 +38,13 @@ input.addEventListener("input", function () {
         } else {
             listeElemani[i].style.opacity = 1;
             listeElemani[i].style.display = "";
-            sonucVar=1;
+            sonucVar = 1;
         }
-        
-        if(sonucVar === 1)
-        {
-            output.innerHTML = "\u25B2";
-            dmi_items_div.style.display = "inline";
-        }
-        else
-        {
-            output.innerHTML = "\u25BC";
-            dmi_items_div.style.display = "none";
+
+        if (sonucVar === 1) {
+            listeyiAc();
+        } else {
+            listeyiKapat();
         }
     }
 });
@@ -42,19 +52,24 @@ input.addEventListener("input", function () {
 var node = document.createTextNode('\u25BC');
 //tuşa basıldı
 output.addEventListener("click", function () {
-
-    if(dmi_items_div.style.display === "none")
-    {
-        dmi_items_div.style.display = "inline";
-        output.innerHTML = "\u25B2";
-    }
-    else
-    {
-        dmi_items_div.style.display = "none";
-        output.innerHTML = "\u25BC";
+    if (dmi_items_div.style.display === "none") {
+        listeyiAc();
+    } else {
+        listeyiKapat();
     }
 });
 
 output.appendChild(node);
 dmi_input_div.appendChild(input);
 dmi_input_div.appendChild(output);
+
+function listeyiKapat() {
+    dmi_items_div.style.display = "none";
+    output.innerHTML = "\u25BC";
+}
+
+function listeyiAc() {
+    dmi_items_div.style.display = "inline";
+    output.innerHTML = "\u25B2";
+}
+
