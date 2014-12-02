@@ -3,12 +3,12 @@
 
 add css :
 ```css
-<link rel="stylesheet" href="https://cdn.rawgit.com/eredacokmerke/dm-i/master/dmi.css">
+<link rel="stylesheet" href="https://raw.githack.com/eredacokmerke/dm-i/master/dmi.css">
 ```
     
 add js :
 ```js 
-<script src="https://cdn.rawgit.com/eredacokmerke/dm-i/master/dmi.js"></script>
+<script src="https://raw.githack.com/eredacokmerke/dm-i/master/dmi.js"></script>
 ```
 
 add html :
