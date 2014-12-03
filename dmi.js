@@ -3,13 +3,12 @@ var dmi_items_div = document.getElementById("dmi-items-div");
 var dmi_items = document.getElementById("dmi-items");
 var listeElemani = dmi_items.getElementsByTagName("li");
 var output = document.createElement("output");
-var input = document.createElement("input");
-
+var dmi_input = document.getElementById("dmi-input");
+var ilkInput = 0;
 output.style.cursor = "pointer";
 dmi_items_div.style.display = "none";
 dmi_items.style.listStyle = "none";
 dmi_items.style.padding = "0";
-input.id = "dmi-input2";
 
 //liste haricine tıklanırsa liste kapanacak
 window.onclick = function (e) {
@@ -23,17 +22,26 @@ window.onclick = function (e) {
 
 //listeden seçim yapıldı
 dmi_items.addEventListener("click", function (e) {
-    input.value = e.target.innerHTML;
+    dmi_input.value = e.target.innerHTML;
     listeyiKapat();
+    ilkInput = 1;
 });
 
+dmi_input.addEventListener("click", function () {
+    if (ilkInput === 0) {
+        ilkInput = 1;
+        dmi_input.value = "";
+    }
+})
+
 //input a yazı yazıldı
-input.addEventListener("input", function () {
+dmi_input.addEventListener("input", function () {
     var i;
     var sonucVar = 0;
+    ilkInput = 1;
 
     for (i = 0; i < listeElemani.length; i++) {
-        if (listeElemani[i].innerHTML.indexOf(input.value) === -1) {
+        if (listeElemani[i].innerHTML.indexOf(dmi_input.value) === -1) {
             listeElemani[i].style.opacity = 0;
             listeElemani[i].style.display = "none";
         } else {
@@ -61,7 +69,6 @@ output.addEventListener("click", function () {
 });
 
 output.appendChild(node);
-dmi_input_div.appendChild(input);
 dmi_input_div.appendChild(output);
 
 function listeyiKapat() {
