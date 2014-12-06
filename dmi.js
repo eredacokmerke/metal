@@ -4,7 +4,7 @@ var dmi_items = document.getElementById("dmi-items");
 var listeElemani = dmi_items.getElementsByTagName("li");
 var output = document.createElement("output");
 var dmi_input = document.getElementById("dmi-input");
-var ilkInput = 0;
+var ilkInput = 0; //input alanına tıklandığı zaman yazı silinecek mi
 output.style.cursor = "pointer";
 dmi_items_div.style.display = "none";
 dmi_items.style.listStyle = "none";
@@ -18,7 +18,7 @@ window.onclick = function (e) {
     if (target.parentNode.id !== "dmi-input-div" && target.parentNode.id !== "dmi-items") {
         listeyiKapat();
     }
-}
+};
 
 //listeden seçim yapıldı
 dmi_items.addEventListener("click", function (e) {
@@ -27,12 +27,13 @@ dmi_items.addEventListener("click", function (e) {
     ilkInput = 1;
 });
 
+//input a tıklandı. ilk tıklamaysa input silinecek
 dmi_input.addEventListener("click", function () {
     if (ilkInput === 0) {
         ilkInput = 1;
         dmi_input.value = "";
     }
-})
+});
 
 //input a yazı yazıldı
 dmi_input.addEventListener("input", function () {
@@ -41,7 +42,9 @@ dmi_input.addEventListener("input", function () {
     ilkInput = 1;
 
     for (i = 0; i < listeElemani.length; i++) {
-        if (listeElemani[i].innerHTML.indexOf(dmi_input.value) === -1) {
+        var yazi = yaziyiGetir(listeElemani[i]);
+
+        if (yazi.toLowerCase().indexOf(dmi_input.value.toLowerCase()) === -1) {
             listeElemani[i].style.opacity = 0;
             listeElemani[i].style.display = "none";
         } else {
@@ -71,6 +74,22 @@ output.addEventListener("click", function () {
 output.appendChild(node);
 dmi_input_div.appendChild(output);
 
+//iç etiketlerden yazıları getirir
+function yaziyiGetir(eleman) {
+    var a = 0;
+    var icElemanSayisi = eleman.children.length;
+    var yazi = "";
+
+    if (icElemanSayisi === 0) {
+        yazi = eleman.innerHTML;
+    } else {
+        for (a = 0; a < icElemanSayisi; a++) {
+            yazi = yazi + yaziyiGetir(eleman.children[a]);
+        }
+    }
+    return yazi;
+}
+
 function listeyiKapat() {
     dmi_items_div.style.display = "none";
     output.innerHTML = "\u25BC";
@@ -80,4 +99,3 @@ function listeyiAc() {
     dmi_items_div.style.display = "inline";
     output.innerHTML = "\u25B2";
 }
-
