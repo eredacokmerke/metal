@@ -1,7 +1,9 @@
 #dmi-items-div {
     display: none;
 }
+#dmi-items {
+    position: absolute;
+}
 #dmi-items li {
     cursor: pointer;
 }
-
