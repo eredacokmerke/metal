@@ -1,9 +1,9 @@
-#dmi-items-div {
+.dmi-items-div {
     display: none;
 }
-#dmi-items {
+.dmi-items {
     position: absolute;
 }
-#dmi-items li {
+.dmi-items li {
     cursor: pointer;
 }
