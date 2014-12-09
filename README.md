@@ -13,19 +13,23 @@ add js :
 
 add html :
 ```html
-<div id="dmi-input-div">
-    <input id="dmi-input" value="Choose..."></input>
-</div>
-<div id="dmi-items-div">
-    <ul id="dmi-items">
-        <li>first item</li>
-        <li>second item</li>
-        ....
-    </ul>
+<div class="dmi-div">
+    <div class="dmi-input-div">
+    <input class="dmi-input" value="Choose..."></input>
+    </div>
+    <div class="dmi-items-div">
+        <ul class="dmi-items">
+            <li>first_item</li>
+            <li>second_item</li>
+            ....
+        </ul>
+    </div>
 </div>
 ```
 
 ##Examples
 - Basic : http://codepen.io/eredacokmerke/pen/vELgrG
 - A bit fancy : http://codepen.io/eredacokmerke/pen/LEpNLg
-- Link list : http://codepen.io/eredacokmerke/pen/WbrRyd
+- Menu with links : http://codepen.io/eredacokmerke/pen/WbrRyd
+- Multiple menus : http://codepen.io/eredacokmerke/pen/YPwBVj
+
