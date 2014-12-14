@@ -1,4 +1,4 @@
-#_M_etal is mor_E_ _T_han _A_ _L_ist
+#*M*etal is mor*E* *T*han *A* *L*ist
 
 Metal is a pure javascript library that provides combination of select and input tag.
 
