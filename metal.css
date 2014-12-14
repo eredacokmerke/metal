@@ -1,0 +1,11 @@
+.metal-items-div {
+    display: none;
+}
+.metal-items {
+    position: absolute;
+    list-style: none;
+    padding: 0;
+}
+.metal-items li {
+    cursor: pointer;
+}
