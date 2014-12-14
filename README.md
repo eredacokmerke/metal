@@ -1,24 +1,39 @@
-#DropdownMenu + Input
+#*M*etal is mor*E* *T*han *A* *L*ist
+
+Metal is a pure javascript library that provides combination of select and input tag.
+
 ##Usage
 
 add css :
 ```css
-<link rel="stylesheet" href="https://raw.githack.com/eredacokmerke/dm-i/master/dmi.css">
+<link rel="stylesheet" href="https://raw.githack.com/eredacokmerke/metal/master/metal.css">
 ```
 
 add js :
 ```js 
-<script src="https://raw.githack.com/eredacokmerke/dm-i/master/dmi.js"></script>
+<script src="https://raw.githack.com/eredacokmerke/metal/master/metal.js"></script>
 ```
 
-add html :
+add html for list with input:
 ```html
-<div class="dmi-div">
-    <div class="dmi-input-div">
-    <input class="dmi-input" value="Choose..."></input>
+<div class="metal-div">
+    <div class="metal-input-div" metal-text="Choose..."></div>
+    <div class="metal-items-div">
+        <ul class="metal-items">
+            <li>first_item</li>
+            <li>second_item</li>
+            ....
+        </ul>
     </div>
-    <div class="dmi-items-div">
-        <ul class="dmi-items">
+</div>
+```
+
+add html for list without input:
+```html
+<div class="metal-div">
+    <div class="metal-output-div" metal-text="Choose..."></div>
+    <div class="metal-items-div">
+        <ul class="metal-items">
             <li>first_item</li>
             <li>second_item</li>
             ....
@@ -28,8 +43,9 @@ add html :
 ```
 
 ##Examples
-- Basic : http://codepen.io/eredacokmerke/pen/vELgrG
-- A bit fancy : http://codepen.io/eredacokmerke/pen/LEpNLg
-- Menu with links : http://codepen.io/eredacokmerke/pen/WbrRyd
-- Multiple menus : http://codepen.io/eredacokmerke/pen/YPwBVj
+- list with input : http://codepen.io/eredacokmerke/pen/vELgrG
+- list without input : http://codepen.io/eredacokmerke/pen/YPqjVb
+- list of links : http://codepen.io/eredacokmerke/pen/WbrRyd
+- multiple lists : http://codepen.io/eredacokmerke/pen/YPwBVj
+- fancy : http://codepen.io/eredacokmerke/pen/LEpNLg
 
