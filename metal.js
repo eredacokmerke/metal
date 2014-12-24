@@ -39,7 +39,6 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
         icerik.className = INPUT;
         icerik.setAttribute(INDEKS, indeks);
         icerik.style.width = ab;
-        icerik.style.fontSize = "40px";
         var div1 = document.createElement("div");
         div1.style.display = "inline-block";
         div1.style.verticalAlign = "middle";
@@ -78,7 +77,6 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
         icerik.style.margin = "0";
         icerik.style.width = aa;
         icerik.style.cursor = "pointer";
-        icerik.style.fontSize = "40px";
         var div1 = document.createElement("div");
         div1.style.display = "inline-block";
         div1.style.verticalAlign = "middle";
