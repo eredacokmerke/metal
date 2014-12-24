@@ -16,7 +16,7 @@ function metalDiv(type, isaret, liste, secenek, icerik, ilkInput) {
     this.isaret = isaret;
     this.liste = liste;
     this.secenek = secenek; //isaret+icerik
-    this.icerik = icerik;//input/output
+    this.icerik = icerik; //input/output
     this.ilkInput = 1;
 }
 
@@ -28,33 +28,36 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
     liste.setAttribute(INDEKS, indeks);
 
     var toplamEn = metal_div[indeks].getAttribute("metal-width");
-    metal_div[indeks].style.width = toplamEn;
+
+    metal_div[indeks].style.width = toplamEn + "px";
     var aa = toplamEn - 20;
+    var ab = aa + "px";
 
     if (secenek.className === INPUT_DIV) {
         var icerik = document.createElement("input");
         icerik.setAttribute("value", secenek.getAttribute(TEXT));
         icerik.className = INPUT;
         icerik.setAttribute(INDEKS, indeks);
-        icerik.style.width = aa;
+        icerik.style.width = ab;
+        icerik.style.fontSize = "40px";
         var div1 = document.createElement("div");
         div1.style.display = "inline-block";
         div1.style.verticalAlign = "middle";
-        div1.style.width = aa;
+        div1.style.width = ab;
         div1.appendChild(icerik);
         div1.className = ICERIK_DIV;
+        div1.style.paddingRight = "5px";
 
         var node = document.createTextNode(ISARET_AC);
         var isaret = document.createElement("output");
         isaret.style.cursor = "pointer";
-        isaret.style.float = "right";
         isaret.className = POINTER;
         isaret.appendChild(node);
         isaret.setAttribute(INDEKS, indeks);
         var div2 = document.createElement("div");
         div2.style.display = "inline-block";
         div2.style.verticalAlign = "middle";
-        div2.style.width = "15";
+        div2.style.width = "15px";
         div2.className = POINTER_DIV;
         div2.appendChild(isaret);
         div2.setAttribute(INDEKS, indeks);
@@ -75,22 +78,23 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
         icerik.style.margin = "0";
         icerik.style.width = aa;
         icerik.style.cursor = "pointer";
+        icerik.style.fontSize = "40px";
         var div1 = document.createElement("div");
         div1.style.display = "inline-block";
         div1.style.verticalAlign = "middle";
-        div1.style.width = aa;
+        div1.style.width = ab;
         div1.appendChild(icerik);
         div1.className = ICERIK_DIV;
+        div1.style.paddingRight = "5px";
 
         var div2 = document.createElement("div");
         div2.style.display = "inline-block";
         div2.style.verticalAlign = "middle";
-        div2.style.width = "15";
+        div2.style.width = "15px";
         div2.className = POINTER_DIV;
         var node = document.createTextNode(ISARET_AC);
         var isaret = document.createElement("output");
         isaret.style.cursor = "pointer";
-        isaret.style.float = "right";
         isaret.className = POINTER;
         isaret.appendChild(node);
         isaret.setAttribute(INDEKS, indeks);
