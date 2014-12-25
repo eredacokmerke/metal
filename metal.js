@@ -9,6 +9,7 @@ var TEXT = "metal-text";
 var ITEMS = "metal-items";
 var ISARET_AC = "\u25BC";
 var ISARET_KAPA = "\u25B2";
+var padding = "10px";
 var metal_div = document.getElementsByClassName("metal-div");
 
 function metalDiv(type, isaret, liste, secenek, icerik, ilkInput) {
@@ -30,7 +31,7 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
     var toplamEn = metal_div[indeks].getAttribute("metal-width");
 
     metal_div[indeks].style.width = toplamEn + "px";
-    var aa = toplamEn - 20;
+    var aa = toplamEn - 25;
     var ab = aa + "px";
 
     if (secenek.className === INPUT_DIV) {
@@ -45,7 +46,7 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
         div1.style.width = ab;
         div1.appendChild(icerik);
         div1.className = ICERIK_DIV;
-        div1.style.paddingRight = "5px";
+        div1.style.paddingRight = padding;
 
         var node = document.createTextNode(ISARET_AC);
         var isaret = document.createElement("output");
@@ -83,7 +84,7 @@ for (var indeks = 0; indeks < metal_div.length; indeks++) {
         div1.style.width = ab;
         div1.appendChild(icerik);
         div1.className = ICERIK_DIV;
-        div1.style.paddingRight = "5px";
+        div1.style.paddingRight = padding;
 
         var div2 = document.createElement("div");
         div2.style.display = "inline-block";
