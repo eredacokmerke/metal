@@ -1,4 +1,4 @@
-#*M*etal is mor*E* *T*han *A* *L*ist
+#metal is more than a list
 
 Metal is a pure javascript library that provides combination of select and input tag.
 
@@ -16,7 +16,7 @@ add js :
 
 add html for list with input:
 ```html
-<div class="metal-div">
+<div class="metal-div" metal-width="200">
     <div class="metal-input-div" metal-text="Choose..."></div>
     <div class="metal-items-div">
         <ul class="metal-items">
@@ -30,7 +30,7 @@ add html for list with input:
 
 add html for list without input:
 ```html
-<div class="metal-div">
+<div class="metal-div" metal-width="200">
     <div class="metal-output-div" metal-text="Choose..."></div>
     <div class="metal-items-div">
         <ul class="metal-items">
@@ -41,6 +41,9 @@ add html for list without input:
     </div>
 </div>
 ```
+
+##Style
+You have to add ```.metal-input``` and ```.metal-pointer``` rules to css in order to change input and pointer's style.
 
 ##Examples
 - list with input : http://codepen.io/eredacokmerke/pen/vELgrG
