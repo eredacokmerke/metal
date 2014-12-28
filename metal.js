@@ -195,6 +195,9 @@ function metal_init(options) {
                 var ii = this.getAttribute(INDEKS);
                 if (metalDivList[ii].liste.style.display === "none") {
                     listeyiAc(ii);
+                    if (ONE_LIST_VISIBLE === true) {
+                        digerListeleriKapat(ii);
+                    }
                 } else {
                     listeyiKapat(ii);
                 }
