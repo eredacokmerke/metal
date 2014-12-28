@@ -4,12 +4,12 @@ Metal is a pure javascript library that provides combination of select and input
 
 ##Usage
 
-add css :
+add metal.css :
 ```css
 <link rel="stylesheet" href="https://raw.githack.com/eredacokmerke/metal/master/metal.css">
 ```
 
-add js :
+add metal.js before your javascript file:
 ```js 
 <script src="https://raw.githack.com/eredacokmerke/metal/master/metal.js"></script>
 ```
@@ -40,6 +40,19 @@ add html for list without input:
         </ul>
     </div>
 </div>
+```
+
+call ```metal_init()``` in your index.js
+```js 
+metal_init();
+```
+
+##Options
+```oneListVisible```: Open list will be closed when another list is opened. (```true``` or ```false```)
+```js
+metal_init({
+    oneListVisible: true
+});
 ```
 
 ##Style
