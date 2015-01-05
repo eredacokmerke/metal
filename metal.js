@@ -87,12 +87,13 @@ function metal_init(options)
         }
         else if (secenek.className === OUTPUT_DIV)
         {
-            var icerik = document.createElement("p");
-            icerik.innerHTML = secenek.getAttribute(TEXT);
+            var icerik = document.createElement("input");
+            icerik.setAttribute("value", secenek.getAttribute(TEXT));
             icerik.className = INPUT;
             icerik.setAttribute(INDEKS, indeks);
-            icerik.style.margin = "0";
-            icerik.style.width = aa;
+            icerik.style.width = ab;
+            icerik.readOnly = true;
+            icerik.style.borderColor = "transparent";
             icerik.style.cursor = "pointer";
             var div1 = document.createElement("div");
             div1.style.display = "inline-block";
@@ -102,18 +103,17 @@ function metal_init(options)
             div1.className = ICERIK_DIV;
             div1.style.paddingRight = padding;
 
-            var div2 = document.createElement("div");
-            div2.style.display = "inline-block";
-            div2.style.verticalAlign = "middle";
-            div2.style.width = "15px";
-            div2.className = POINTER_DIV;
             var node = document.createTextNode(ISARET_AC);
             var isaret = document.createElement("output");
             isaret.style.cursor = "pointer";
             isaret.className = POINTER;
             isaret.appendChild(node);
             isaret.setAttribute(INDEKS, indeks);
-
+            var div2 = document.createElement("div");
+            div2.style.display = "inline-block";
+            div2.style.verticalAlign = "middle";
+            div2.style.width = "15px";
+            div2.className = POINTER_DIV;
             div2.appendChild(isaret);
             div2.setAttribute(INDEKS, indeks);
 
@@ -213,7 +213,8 @@ function metal_init(options)
             metalDivList[i].liste.addEventListener("click", function(e)
             {
                 var ii = this.getAttribute(INDEKS);
-                metalDivList[ii].icerik.innerHTML = e.target.innerHTML;
+                //metalDivList[ii].icerik.innerHTML = e.target.innerHTML;
+                metalDivList[ii].icerik.value = yaziyiGetir(e.target);
                 listeyiKapat(ii);
                 metalDivList[ii].ilkInput = 1;
             });
