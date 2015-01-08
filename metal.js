@@ -54,6 +54,8 @@ function metal_init(options)
             icerik.className = INPUT;
             icerik.setAttribute(INDEKS, indeks);
             icerik.style.width = ab;
+            icerik.style.borderColor = "grey";
+            icerik.style.borderWidth = "1px";
             var div1 = document.createElement("div");
             div1.style.display = "inline-block";
             div1.style.verticalAlign = "middle";
@@ -94,7 +96,12 @@ function metal_init(options)
             icerik.style.width = ab;
             icerik.readOnly = true;
             icerik.style.borderColor = "transparent";
+            icerik.style.borderWidth = "1px";
             icerik.style.cursor = "pointer";
+            icerik.style.userSelect = "none";
+            icerik.style.webkitUserSelect = "none";
+            icerik.style.MozUserSelect = "none";
+            icerik.setAttribute("unselectable", "on");
             var div1 = document.createElement("div");
             div1.style.display = "inline-block";
             div1.style.verticalAlign = "middle";
@@ -213,7 +220,6 @@ function metal_init(options)
             metalDivList[i].liste.addEventListener("click", function(e)
             {
                 var ii = this.getAttribute(INDEKS);
-                //metalDivList[ii].icerik.innerHTML = e.target.innerHTML;
                 metalDivList[ii].icerik.value = yaziyiGetir(e.target);
                 listeyiKapat(ii);
                 metalDivList[ii].ilkInput = 1;
