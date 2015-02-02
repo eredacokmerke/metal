@@ -9,11 +9,15 @@ function metal_init(options)
     var POINTER = "metal-pointer";
     var TEXT = "metal-text";
     var ITEMS = "metal-items";
+    var SELECTED_ITEM = "metal-selected-item";
+    var TIP_INPUT = 0;
+    var TIP_OUTPUT = 1;
     var ISARET_AC = "\u25BC";
     var ISARET_KAPA = "\u25B2";
     var padding = "10px";
     var metal_div = document.getElementsByClassName("metal-div");
     var ONE_LIST_VISIBLE;
+    var global_ind;
     if (options === undefined) //init metodunda belirtilmemiş, öntanımlı değer kullanılacak
     {
         ONE_LIST_VISIBLE = false;
@@ -31,9 +35,11 @@ function metal_init(options)
         this.secenek = secenek; //isaret+icerik
         this.icerik = icerik; //input/output
         this.ilkInput = 1;
+        this.secilenListeElemani = 0;
     }
 
     var metalDivList = [];
+    var acikListeler = [];
 
     for (var indeks = 0; indeks < metal_div.length; indeks++)
     {
@@ -44,8 +50,8 @@ function metal_init(options)
         var toplamEn = metal_div[indeks].getAttribute("metal-width");
 
         metal_div[indeks].style.width = toplamEn + "px";
-        var aa = toplamEn - 25;
-        var ab = aa + "px";
+        var ab = toplamEn - 25;
+        ab = ab + "px";
 
         if (secenek.className === INPUT_DIV)
         {
@@ -54,7 +60,7 @@ function metal_init(options)
             icerik.className = INPUT;
             icerik.setAttribute(INDEKS, indeks);
             icerik.style.width = ab;
-            icerik.style.borderColor = "grey";
+            icerik.style.borderColor = "transparent";
             icerik.style.borderWidth = "1px";
             var div1 = document.createElement("div");
             div1.style.display = "inline-block";
@@ -83,6 +89,7 @@ function metal_init(options)
             secenek.setAttribute(INDEKS, indeks);
 
             liste.style.display = "none";
+            liste.children[0].style.width = toplamEn + "px";
 
             var metaldiv = new metalDiv(INPUT_DIV, div2, liste, secenek, icerik);
             metalDivList.push(metaldiv);
@@ -129,6 +136,7 @@ function metal_init(options)
             secenek.setAttribute(INDEKS, indeks);
 
             liste.style.display = "none";
+            liste.children[0].style.width = toplamEn + "px";
 
             var metaldiv = new metalDiv(OUTPUT_DIV, div2, liste, secenek, icerik);
             metalDivList.push(metaldiv);
@@ -166,7 +174,7 @@ function metal_init(options)
                 var ii = this.getAttribute(INDEKS);
                 if (metalDivList[ii].liste.style.display === "none")
                 {
-                    listeyiAc(ii);
+                    listeyiAc(ii, TIP_INPUT);
                     if (ONE_LIST_VISIBLE === true)
                     {
                         digerListeleriKapat(ii);
@@ -201,15 +209,16 @@ function metal_init(options)
                         liste[i].style.display = "";
                         sonucVar = 1;
                     }
+                }
 
-                    if (sonucVar === 1)
-                    {
-                        listeyiAc(ii);
-                    }
-                    else
-                    {
-                        listeyiKapat(ii);
-                    }
+                if (sonucVar === 1)
+                {
+                    listeyiAc(ii, TIP_INPUT);
+
+                }
+                else
+                {
+                    listeyiKapat(ii);
                 }
             });
 
@@ -231,7 +240,7 @@ function metal_init(options)
                 var ii = this.getAttribute(INDEKS);
                 if (metalDivList[ii].liste.style.display === "none")
                 {
-                    listeyiAc(ii);
+                    listeyiAc(ii, TIP_OUTPUT);
                     if (ONE_LIST_VISIBLE === true)
                     {
                         digerListeleriKapat(ii);
@@ -302,12 +311,217 @@ function metal_init(options)
     {
         metalDivList[ind].liste.style.display = "none";
         metalDivList[ind].isaret.children[0].innerHTML = ISARET_AC;
+
+        acikListeler.splice(acikListeler.indexOf(ind), 1);
+        if (acikListeler.length === 0)
+        {
+            document.onkeydown = function(e)
+            {
+                return true;
+            };
+        }
     }
 
-    function listeyiAc(ind)
+    function listeyiAc(ind, tip)
     {
         metalDivList[ind].liste.style.display = "inline";
         metalDivList[ind].isaret.children[0].innerHTML = ISARET_KAPA;
+        if (tip === TIP_INPUT)
+        {
+            document.onkeydown = okTusunaBasildiInput;
+            satiriSecInput(metalDivList[ind], 0);
+        }
+        else if (tip === TIP_OUTPUT)
+        {
+            document.onkeydown = okTusunaBasildiOutput;
+            satiriSecOutput(metalDivList[ind], 0);
+        }
+
+        acikListeler.push(ind);
+    }
+
+    //outputlu listenin satırını secer
+    function satiriSecOutput(metaldivlist, fark)
+    {
+        var secilenListeElemaniSirasi = metaldivlist.secilenListeElemani;
+        var listeElemanlari = metaldivlist.liste.children[0];
+        var toplamElemanSayisi = listeElemanlari.children.length;
+        //var opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+
+        listeElemanlari.children[secilenListeElemaniSirasi].className = "";
+        secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
+
+        if (secilenListeElemaniSirasi < 0) //listenin ilk satırına gelindi 
+        {
+            secilenListeElemaniSirasi = toplamElemanSayisi - 1;
+        }
+        else if (secilenListeElemaniSirasi === toplamElemanSayisi) //listenin son satırına gelindi
+        {
+            secilenListeElemaniSirasi = 0;
+        }
+        listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+        metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+    }
+
+    //inputlu listenin satırını secer
+    function satiriSecInput(metaldivlist, fark)
+    {
+        var secilenListeElemaniSirasi = metaldivlist.secilenListeElemani;
+        var listeElemanlari = metaldivlist.liste.children[0];
+        var toplamElemanSayisi = listeElemanlari.children.length;
+
+        listeElemanlari.children[secilenListeElemaniSirasi].className = "";
+        secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
+
+        if (secilenListeElemaniSirasi < 0) //listenin ilk satırına gelindi 
+        {
+            secilenListeElemaniSirasi = toplamElemanSayisi - 1;
+        }
+        else if (secilenListeElemaniSirasi === toplamElemanSayisi) //listenin son satırına gelindi
+        {
+            secilenListeElemaniSirasi = 0;
+        }
+
+        var opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+
+        if (fark === 0) //listenin ilk açılışı. ilk gorunur eleman seçili olacak
+        {
+            if (opacity === "" || opacity === "1")
+            {
+                listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+            }
+            else
+            {
+                var bulundu = 0; //isaretlenicek liste elemanı bulundu. eğer listede hiç eleman yoksa isaretleme yapılmayacak
+                while (opacity === "0" && secilenListeElemaniSirasi < toplamElemanSayisi - 1)
+                {
+                    secilenListeElemaniSirasi++;
+                    opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+                    if (opacity === "1")
+                    {
+                        bulundu = 1;
+                        listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                        metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+                    }
+                }
+            }
+        }
+        else //alt veya ust tusa basildi
+        {
+            if (opacity === "" || opacity === "1")
+            {
+                listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+            }
+            else
+            {
+                var bulundu = 0; //isaretlenicek liste elemanı bulundu. eğer listede hiç eleman yoksa isaretleme yapılmayacak
+                while (opacity === "0" && secilenListeElemaniSirasi < toplamElemanSayisi - 1 && secilenListeElemaniSirasi > 0)
+                {
+                    secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
+                    opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+                    if (opacity === "1")
+                    {
+                        bulundu = 1;
+                        listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                        metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+                    }
+                }
+
+                if (bulundu === 0) //secili eleman ilk veya son sırada. liste baştan taranacak
+                {
+                    if (fark === 1) //asagi tus basildi, liste yukarıdan taranacak
+                    {
+                        secilenListeElemaniSirasi = -1;
+                        while (opacity === "0" && secilenListeElemaniSirasi < toplamElemanSayisi - 1)
+                        {
+                            secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
+                            opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+                            if (opacity === "1")
+                            {
+                                bulundu = 1;
+                                listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                                metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+                            }
+                        }
+                    }
+                    else //yukarı tus basıldı, liste asagıdan taranacak
+                    {
+                        secilenListeElemaniSirasi = toplamElemanSayisi;
+                        while (opacity === "0" && secilenListeElemaniSirasi > 0)
+                        {
+                            secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
+                            opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
+                            if (opacity === "1")
+                            {
+                                bulundu = 1;
+                                listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
+                                metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    function okTusunaBasildiOutput(e)
+    {
+        e = e || window.event;
+        var indeks = acikListeler[acikListeler.length - 1];
+        
+        if (e.keyCode == '38')
+        {
+            e.preventDefault();
+            satiriSecOutput(metalDivList[indeks], -1);
+        }
+        else if (e.keyCode == '40')
+        {
+            e.preventDefault();
+            satiriSecOutput(metalDivList[indeks], 1);
+        }
+        else if (e.keyCode == '13')
+        {
+            e.preventDefault();
+            var mdl = metalDivList[indeks];
+            mdl.icerik.value = mdl.liste.children[0].children[mdl.secilenListeElemani].innerHTML;
+            listeyiKapat(indeks);
+        }
+        else if (e.keyCode == '27')
+        {
+            e.preventDefault();
+            listeleriKapat();
+        }
+    }
+
+    function okTusunaBasildiInput(e)
+    {
+        e = e || window.event;
+        var indeks = acikListeler[acikListeler.length - 1];
+        
+        if (e.keyCode == '38')
+        {
+            e.preventDefault();
+            satiriSecInput(metalDivList[indeks], -1);
+        }
+        else if (e.keyCode == '40')
+        {
+            e.preventDefault();
+            satiriSecInput(metalDivList[indeks], 1);
+        }
+        else if (e.keyCode == '13')
+        {
+            e.preventDefault();
+            var mdl = metalDivList[indeks];
+            mdl.icerik.value = mdl.liste.children[0].children[mdl.secilenListeElemani].innerHTML;
+            listeyiKapat(indeks);
+        }
+        else if (e.keyCode == '27')
+        {
+            e.preventDefault();
+            listeleriKapat();
+        }
     }
 }
 

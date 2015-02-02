@@ -1,11 +1,19 @@
 .metal-items-div {
-    display: none;
+display:none;
 }
+
 .metal-items {
-    position: absolute;
-    list-style: none;
-    padding: 0;
+position:absolute;
+list-style:none;
+padding:0;
 }
+
 .metal-items li {
-    cursor: pointer;
+cursor:pointer;
+background-color:#FFF;
 }
+
+.metal-selected-item {
+background-color:lightgray!important;
+}
+
