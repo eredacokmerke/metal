@@ -485,7 +485,7 @@ function metal_init(options)
         {
             e.preventDefault();
             var mdl = metalDivList[indeks];
-            mdl.icerik.value = mdl.liste.children[0].children[mdl.secilenListeElemani].innerHTML;
+            mdl.icerik.value = yaziyiGetir(mdl.liste.children[0].children[mdl.secilenListeElemani]);
             listeyiKapat(indeks);
         }
         else if (e.keyCode == '27')
@@ -514,7 +514,7 @@ function metal_init(options)
         {
             e.preventDefault();
             var mdl = metalDivList[indeks];
-            mdl.icerik.value = mdl.liste.children[0].children[mdl.secilenListeElemani].innerHTML;
+            mdl.icerik.value = yaziyiGetir(mdl.liste.children[0].children[mdl.secilenListeElemani]);
             listeyiKapat(indeks);
         }
         else if (e.keyCode == '27')
