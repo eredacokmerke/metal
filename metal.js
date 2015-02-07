@@ -46,6 +46,16 @@ function metal_init(options)
         var secenek = metal_div[indeks].children[0]; //metal-div in içindeki 1. kısım (input/output+pointer)
         var liste = metal_div[indeks].children[1]; //metal-div in içindeki 2. kısım (liste)
         liste.setAttribute(INDEKS, indeks);
+        var listeElemanlari = liste.children[0];
+
+        for (var i = 0; i < listeElemanlari.children.length; i++)
+        {
+            listeElemanlari.children[i].setAttribute(INDEKS, i);
+            listeElemanlari.children[i].onmouseover = function()
+            {
+                mouseOver(this)
+            };
+        }
 
         var toplamEn = metal_div[indeks].getAttribute("metal-width");
 
@@ -336,7 +346,6 @@ function metal_init(options)
             document.onkeydown = okTusunaBasildiOutput;
             satiriSecOutput(metalDivList[ind], 0);
         }
-
         acikListeler.push(ind);
     }
 
@@ -346,7 +355,6 @@ function metal_init(options)
         var secilenListeElemaniSirasi = metaldivlist.secilenListeElemani;
         var listeElemanlari = metaldivlist.liste.children[0];
         var toplamElemanSayisi = listeElemanlari.children.length;
-        //var opacity = listeElemanlari.children[secilenListeElemaniSirasi].style.opacity;
 
         listeElemanlari.children[secilenListeElemaniSirasi].className = "";
         secilenListeElemaniSirasi = secilenListeElemaniSirasi + fark;
@@ -359,6 +367,7 @@ function metal_init(options)
         {
             secilenListeElemaniSirasi = 0;
         }
+
         listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
         metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
     }
@@ -470,7 +479,7 @@ function metal_init(options)
     {
         e = e || window.event;
         var indeks = acikListeler[acikListeler.length - 1];
-        
+
         if (e.keyCode == '38')
         {
             e.preventDefault();
@@ -499,7 +508,7 @@ function metal_init(options)
     {
         e = e || window.event;
         var indeks = acikListeler[acikListeler.length - 1];
-        
+
         if (e.keyCode == '38')
         {
             e.preventDefault();
@@ -522,6 +531,18 @@ function metal_init(options)
             e.preventDefault();
             listeleriKapat();
         }
+    }
+
+    //fare ile seçeneğin üzerine gelindi
+    function mouseOver(t)
+    {
+        var ind = t.parentElement.parentElement.getAttribute(INDEKS);
+        var seciliListeElemaniInd = t.getAttribute(INDEKS);
+        var listeElemanlari = metalDivList[ind].liste.children[0];
+
+        listeElemanlari.children[metalDivList[ind].secilenListeElemani].className = "";
+        listeElemanlari.children[seciliListeElemaniInd].className = SELECTED_ITEM;
+        metalDivList[ind].secilenListeElemani = parseInt(seciliListeElemaniInd);
     }
 }
 
