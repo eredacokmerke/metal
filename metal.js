@@ -306,6 +306,10 @@ function metal_init(options)
         if (icElemanSayisi === 0)
         {
             yazi = eleman.innerHTML;
+            if (yazi.length === 0)
+            {
+                yazi = eleman.value;
+            }
         }
         else
         {
