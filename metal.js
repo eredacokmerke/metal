@@ -1,3 +1,9 @@
+var localSeciliEleman = -1;
+var localSeciliListe = -1;
+
+var globalSeciliEleman = -1;
+var globalSeciliListe = -1;
+
 function metal_init(options)
 {
     var INDEKS = "indeks";
@@ -17,7 +23,7 @@ function metal_init(options)
     var padding = "10px";
     var metal_div = document.getElementsByClassName("metal-div");
     var ONE_LIST_VISIBLE;
-    var global_ind;
+    //var global_ind;
     if (options === undefined) //init metodunda belirtilmemiş, öntanımlı değer kullanılacak
     {
         ONE_LIST_VISIBLE = false;
@@ -53,7 +59,7 @@ function metal_init(options)
             listeElemanlari.children[i].setAttribute(INDEKS, i);
             listeElemanlari.children[i].onmouseover = function()
             {
-                mouseOver(this)
+                mouseOver(this);
             };
         }
 
@@ -269,10 +275,15 @@ function metal_init(options)
     {
         e = e || window.event;
         var target = e.target || e.srcElement;
-        var id = target.parentNode.id;
-        if (target.parentNode.className !== INPUT_DIV && target.parentNode.className !== ITEMS && target.parentNode.className !== OUTPUT_DIV && target.parentNode.className !== POINTER_DIV && target.parentNode.className !== ICERIK_DIV)
+        var url = window.location.href + "#";
+
+        if (url.toString() !== target.toString()) //boslukta enter tuşuna basılınca tıklanmış gibi davranmasın
         {
-            listeleriKapat();
+            //var id = target.parentNode.id;
+            if (target.parentNode.className !== INPUT_DIV && target.parentNode.className !== ITEMS && target.parentNode.className !== OUTPUT_DIV && target.parentNode.className !== POINTER_DIV && target.parentNode.className !== ICERIK_DIV)
+            {
+                listeleriKapat();
+            }
         }
     };
 
@@ -281,7 +292,7 @@ function metal_init(options)
     {
         for (var i = 0; i < metalDivList.length; i++)
         {
-            listeyiKapat(i);
+            listeyiKapat2(i);
         }
     }
 
@@ -289,7 +300,7 @@ function metal_init(options)
     {
         for (var i = 0; i < metalDivList.length; i++)
         {
-            if (i != ind)
+            if (i !== ind)
             {
                 listeyiKapat(i);
             }
@@ -321,6 +332,7 @@ function metal_init(options)
         return yazi;
     }
 
+    //secim yapilarak liste kapandi
     function listeyiKapat(ind)
     {
         metalDivList[ind].liste.style.display = "none";
@@ -329,6 +341,30 @@ function metal_init(options)
         acikListeler.splice(acikListeler.indexOf(ind), 1);
         if (acikListeler.length === 0)
         {
+            globalSeciliEleman = localSeciliEleman;
+            globalSeciliListe = localSeciliListe;
+
+            document.onkeydown = function(e)
+            {
+                return true;
+            };
+        }
+    }
+
+    //secim yapılmadan liste kapandi
+    function listeyiKapat2(ind)
+    {
+        metalDivList[ind].liste.style.display = "none";
+        metalDivList[ind].isaret.children[0].innerHTML = ISARET_AC;
+
+        acikListeler.splice(acikListeler.indexOf(ind), 1);
+        if (acikListeler.length === 0)
+        {
+            localSeciliListe = -1;
+            localSeciliEleman = -1;
+            globalSeciliListe = -1;
+            globalSeciliEleman = -1;
+
             document.onkeydown = function(e)
             {
                 return true;
@@ -374,6 +410,8 @@ function metal_init(options)
 
         listeElemanlari.children[secilenListeElemaniSirasi].className = SELECTED_ITEM;
         metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
+
+        localSeciliEleman = metaldivlist.secilenListeElemani;
     }
 
     //inputlu listenin satırını secer
@@ -441,7 +479,6 @@ function metal_init(options)
                         metaldivlist.secilenListeElemani = secilenListeElemaniSirasi;
                     }
                 }
-
                 if (bulundu === 0) //secili eleman ilk veya son sırada. liste baştan taranacak
                 {
                     if (fark === 1) //asagi tus basildi, liste yukarıdan taranacak
@@ -477,6 +514,8 @@ function metal_init(options)
                 }
             }
         }
+
+        localSeciliEleman = metaldivlist.secilenListeElemani;
     }
 
     function okTusunaBasildiOutput(e)
@@ -488,15 +527,17 @@ function metal_init(options)
         {
             e.preventDefault();
             satiriSecOutput(metalDivList[indeks], -1);
+            localSeciliListe = indeks;
         }
         else if (e.keyCode == '40')
         {
             e.preventDefault();
             satiriSecOutput(metalDivList[indeks], 1);
+            localSeciliListe = indeks;
         }
         else if (e.keyCode == '13')
         {
-            e.preventDefault();
+            //e.preventDefault();
             var mdl = metalDivList[indeks];
             mdl.icerik.value = yaziyiGetir(mdl.liste.children[0].children[mdl.secilenListeElemani]);
             listeyiKapat(indeks);
@@ -517,15 +558,17 @@ function metal_init(options)
         {
             e.preventDefault();
             satiriSecInput(metalDivList[indeks], -1);
+            localSeciliListe = indeks;
         }
         else if (e.keyCode == '40')
         {
             e.preventDefault();
             satiriSecInput(metalDivList[indeks], 1);
+            localSeciliListe = indeks;
         }
         else if (e.keyCode == '13')
         {
-            e.preventDefault();
+            //e.preventDefault();
             var mdl = metalDivList[indeks];
             mdl.icerik.value = yaziyiGetir(mdl.liste.children[0].children[mdl.secilenListeElemani]);
             listeyiKapat(indeks);
@@ -547,6 +590,18 @@ function metal_init(options)
         listeElemanlari.children[metalDivList[ind].secilenListeElemani].className = "";
         listeElemanlari.children[seciliListeElemaniInd].className = SELECTED_ITEM;
         metalDivList[ind].secilenListeElemani = parseInt(seciliListeElemaniInd);
+
+        localSeciliEleman = metalDivList[ind].secilenListeElemani;
+        localSeciliListe = ind;
     }
+}
+
+function getSelectedItem()
+{
+    var sonuc = [];
+    sonuc.push(globalSeciliListe);
+    sonuc.push(globalSeciliEleman);
+
+    return sonuc;
 }
 
